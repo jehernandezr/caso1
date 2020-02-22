@@ -58,10 +58,9 @@ public class Main {
 			Buffer buff = new Buffer(numClientes, tamBuffer);
 			
 			for (int i = 0; i < numClientes; i++) {
-				Cliente  = new Cliente(buff, numMensajes);
+				Cliente cliente = new Cliente(buff, numMensajes);
 				
 			}
-
 		}
 		catch (Exception e) {
 			e.printStackTrace();

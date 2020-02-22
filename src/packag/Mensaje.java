@@ -13,6 +13,7 @@ public class Mensaje {
 	
 	public Mensaje() {
 		setMensaje(0);
+		mensajeAlazar();
 	}
 
 	/**
