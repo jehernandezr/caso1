@@ -6,39 +6,59 @@ package packag;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * @author je.hernandezr
- *
- */
-public class Buffer {
-	private int capacidad;
-	List<Mensaje> mensajes;
+public class Buffer 
+{
+	private ArrayList<Mensaje> buff;
+	private int N;
 	Object lleno, vacio;
-	public Buffer(int numclientes, int capacidad) {
-		this.capacidad= capacidad;
-		mensajes= new ArrayList<>(capacidad);
-		lleno= new Object();
-		vacio= new Object();
-		
+
+	public Buffer(int n)
+	{
+		lleno = new Object();
+		vacio = new Object();
+		this.N = n;
 	}
-	public synchronized void addMensaje(Mensaje mensaje) {
-		synchronized (lleno) {
-			while (mensajes.size()==capacidad) {
-				try
-				{
-					Thread.yield();
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			
+
+	@SuppressWarnings("static-access")
+	public void almacenar(Mensaje mns)
+	{
+		synchronized (lleno) 
+		{
+			while (buff.size()== N)
+			{
+				mns.cliente.yield();
 			}
 		}
-		synchronized (this) {
-			mensajes.add(mensaje);
-			capacidad--;}
-		synchronized (vacio) {
-			vacio.notify();
+
+		synchronized (this) 
+		{
+			buff.add(mns);
+			
+			try {mns.cliente.wait();}
+			catch (InterruptedException e)
+			{e.printStackTrace();}
+		}
+		synchronized (vacio) 
+		{vacio.notify();}
+	}
+
+	public void vaciar()
+	{
+		if (buff.size() == 0)
+		{
+			try {vacio.wait();} 
+			catch (InterruptedException e) 
+			{e.printStackTrace();}
 		}
 		
+		synchronized (this) 
+		{
+			Mensaje atendido = buff.remove(1);
+			atendido.setRespuesta();
+			atendido.cliente.notify();
+		}
+		synchronized (lleno) 
+		{lleno.notify();}
 	}
+
 }

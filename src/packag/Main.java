@@ -9,10 +9,6 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 
-/**
- * @author je.hernandezr
- *
- */
 public class Main {
 
 	private static int numClientes;
@@ -58,7 +54,7 @@ public class Main {
 			Buffer buff = new Buffer(numClientes, tamBuffer);
 			
 			for (int i = 0; i < numClientes; i++) {
-				Cliente cliente = new Cliente(buff, numMensajes);
+				Cliente cliente = new Cliente(numMensajes, buff);
 				
 			}
 		}

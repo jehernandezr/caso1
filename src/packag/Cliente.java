@@ -3,29 +3,27 @@
  */
 package packag;
 
-import java.nio.channels.Pipe.SinkChannel;
 
-/**
- * @author je.hernandezr
- *
- */
-public class Cliente extends Thread {
+public class Cliente extends Thread
+{
 
 	private int enviados;
 	private Mensaje[] mensajes;
-
 	private Buffer buff;
-	public Cliente(Buffer bf, int numMensajes)
+	
+	public Cliente(int numMensajes, Buffer bf)
 	{
 		enviados=0;
 		buff=bf;
 		mensajes = new Mensaje[numMensajes];
 	}
 
-	public void run(){
-		while (enviados != mensajes.length) {
+	public void run()
+	{
+		crearMensajes();
+		while (enviados != mensajes.length)
+		{
 			enviarMensaje();
-			
 		}
 	}
 
@@ -35,12 +33,12 @@ public class Cliente extends Thread {
 		enviados++;
 	}
 
-	public void crearMensaje()
+	public void crearMensajes()
 	{
-		for (int i = 0; i < mensajes.length; i++) {
-			Mensaje m= new Mensaje();
+		for (int i = 0; i < mensajes.length; i++) 
+		{
+			Mensaje m= new Mensaje(this);
 			mensajes[i]=m;
-
 		}
 	}
 }

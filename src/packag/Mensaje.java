@@ -1,42 +1,29 @@
-/**
- * 
- */
 package packag;
 
-/**
- * @author je.hernandezr
- *
- */
-public class Mensaje {
 
-	private int mensaje;
-	
-	public Mensaje() {
-		setMensaje(0);
-		mensajeAlazar();
-	}
+public class Mensaje 
+{
+	public Cliente cliente;
+	private int mns;
 
-	/**
-	 * @return the mensaje
-	 */
-	public int getMensaje() {
-		return mensaje;
-	}
-
-	/**
-	 * @param mensaje the mensaje to set
-	 */
-	public void setMensaje(int mensaje) {
-		this.mensaje = mensaje;
-	}
-	
-	public void mensajeAlazar()
+	public Mensaje(Cliente cliente)
 	{
-		int M=1000;
-		int N=2000;
-		int valorEntero = (int) Math.floor(Math.random()*(N-M+1)+M);  // Valor entre M y N, ambos incluidos.
-		
-		mensaje= valorEntero;
+		this.cliente = cliente;
+		mns = (int) Math.floor(Math.random()*10);
 	}
 	
+	public int darMensaje()
+	{
+		return mns;
+	}
+	
+	public Cliente darCliente()
+	{
+		return cliente;
+	}
+	
+	public void setRespuesta()
+	{
+		mns = mns++;
+	}
 }
