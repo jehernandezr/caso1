@@ -6,6 +6,7 @@ package src;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.ArrayList;
 
 public class Main
 {
@@ -13,7 +14,7 @@ public class Main
 	private static int numMensajes;
 	private static int numServidores;
 	private static int tamBuffer;
-	public Main()
+		public Main()
 	{
 		numClientes= 0;
 		numMensajes=0;
@@ -47,6 +48,9 @@ public class Main
 					break;
 				}
 			}
+			
+			ArrayList<Cliente> listaClie = new ArrayList<Cliente>();
+			ArrayList<Servidor> listaSer = new ArrayList<Servidor>();
 			b.close();
 			
 			System.out.println("---Caso 1: Manejo de la concurrencia---");
@@ -61,21 +65,32 @@ public class Main
 			for (int i = 0; i < numClientes; i++) 
 			{
 				Cliente cliente = new Cliente(i, numMensajes, buff);
-				cliente.start();
+				listaClie.add(cliente);
+				
 			}
 			System.out.println("---Los clientes fueron inicializados---");
 			
-//			for (int i = 0; i < numServidores; i++) 
-//			{
-//				Servidor servidor = new Servidor(buff, i);
-//				servidor.start();
-//			}
-//			System.out.println("---Los servidores fueron inicializados---\n");
+			
+			for (int i = 0; i < numServidores; i++) 
+			{
+				Servidor servidor = new Servidor(buff, i);
+				listaSer.add(servidor);
+			}
+			System.out.println("---Los servidores fueron inicializados---\n");
+			
+			for (int i = 0; i < numClientes; i++) {
+				listaClie.get(i).start();
+			}
+			for (int i = 0; i < numServidores; i++) {
+				listaSer.get(i).start();
+			}
 		}
 		catch (Exception e) {
 			e.printStackTrace();
 		}
 
+		
+		
 
 	}
 

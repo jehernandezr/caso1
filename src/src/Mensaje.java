@@ -33,25 +33,5 @@ public class Mensaje
 		respuesta = darMensaje()+1;
 	}
 	
-	public void dormir()
-	{
-		try
-		{cliente.wait();}
-		catch(Exception e)
-		{e.printStackTrace();}
-	}
-	
-	@SuppressWarnings("static-access")
-	public void esperar()
-	{
-		try
-		{cliente.yield();}
-		catch(Exception e)
-		{e.printStackTrace();}
-	}
-	
-	public void despertar()
-	{
-		cliente.notify();
-	}
+
 }

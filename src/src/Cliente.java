@@ -21,30 +21,24 @@ public class Cliente extends Thread
 		this.id = id;
 	}
 	
+	public int darId()
+	{
+		return this.id;
+	}
 	public void run()
 	{
 		crearMensajes();
-		while (enviados != mensajes.length)
+		while (enviados != mensajes.length-1)
 		{
 			System.out.println("El cliente " + id +" envió su mensaje no."+(enviados+1)+": "+mensajes[enviados].darMensaje());
-			enviarMensaje();
+			buff.almacenar(mensajes[enviados]); 
 			enviados++;
 		}
 		System.out.println("El cliente " + id +" envió todos sus mensajes");
 		buff.clienteTermino();
 	}
 
-	public synchronized void enviarMensaje()
-	{
-		crearMensajes();
-		try
-		{
-			buff.almacenar(mensajes[enviados]);
-			enviados++;
-		} 
-		catch (Exception e) 
-		{e.printStackTrace();}
-	}
+
 
 	public void crearMensajes()
 	{

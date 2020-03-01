@@ -21,12 +21,13 @@ public class Servidor extends Thread
 	
 	public void run() 
 	{
-		while(true)
-		{			
+			System.out.println("servidor"+ this.id+ "ha empezado");
 			try {buffer.vaciar();}
 			catch (Exception e) 
 			{e.printStackTrace();}
-		}
+			System.out.println();
+			System.out.println("servidor"+ this.id+ "ha terminado");
+			
 	}
 	
 }

@@ -30,51 +30,45 @@ public class Buffer
 		synchronized (lleno) 
 		{
 			while (buff.size()== N)
-			{mns.esperar();}
+			{Cliente.yield();}
+
 		}
 
 		synchronized (this) 
 		{
 			buff.add(mns);
 
-			try {mns.cliente.wait();}
+			try {wait();}
 			catch (InterruptedException e)
 			{e.printStackTrace();}
 		}
-		synchronized (vacio) 
-		{vacio.notify();}
+		
 	}
 
 	public void vaciar()
 	{
-		if (buff.size() == 0)
+
+		while ( buff.size( ) == 0 )
 		{
-			try {vacio.wait();} 
-			catch (InterruptedException e) 
-			{e.printStackTrace();}
+			synchronized (this) {
+				Servidor.yield();
+			}
+
+
 		}
 
-		synchronized( vacio )
-		{
-			while ( buff.size( ) == 0 )
-			{
-				try { vacio.wait( ); }
-				catch( InterruptedException e )
-				{e.printStackTrace();}
-			}
-		}
 
 		synchronized (this) 
 		{
-			Mensaje atendido = buff.remove(1);
-			atendido.setRespuesta();
-			atendido.cliente.notify();
-		}
+			while(!buff.isEmpty()) {
+				Mensaje atendido = buff.remove(0);
+				System.out.println("el servidor está atendiendo al cliente" +atendido.darCliente().darId());
+				atendido.setRespuesta();
 
-		synchronized (lleno) 
-		{lleno.notify();}
+			}
+		}
 	}
-	
+
 	public void clienteTermino() 
 	{
 		synchronized (this) 
