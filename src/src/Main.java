@@ -14,13 +14,19 @@ public class Main
 	private static int numServidores;
 	private static int tamBuffer;
 
+<<<<<<< HEAD
 	public static void main(String args[])
+=======
+	public Main()
+>>>>>>> 3b9bda0b88f005ab422b4f40c8a2cc3a5790935a
 	{
 
 		numClientes= 0;
 		numMensajes=0;
 		numServidores=0;
-		
+
+	}
+	public static void main(String[] args) {
 		
 		String cadena;
 		try{
@@ -48,11 +54,11 @@ public class Main
 					break;
 				}
 			}
-			
+
 			ArrayList<Cliente> listaClie = new ArrayList<Cliente>();
 			ArrayList<Servidor> listaSer = new ArrayList<Servidor>();
 			b.close();
-			
+
 			System.out.println("---Caso 1: Manejo de la concurrencia---");
 			System.out.println("Número de clientes: "+numClientes);
 			System.out.println("Cada cliente envía "+numMensajes + " mensaje(s)");
@@ -67,18 +73,18 @@ public class Main
 				Cliente cliente = new Cliente(i, numMensajes, buff);
 
 				listaClie.add(cliente);
-				
+
 			}
 			System.out.println("---Los clientes fueron inicializados---");
-			
-			
+
+
 			for (int i = 0; i < numServidores; i++) 
 			{
 				Servidor servidor = new Servidor(buff, i);
 				listaSer.add(servidor);
 			}
 			System.out.println("---Los servidores fueron inicializados---\n");
-			
+
 			for (int i = 0; i < numClientes; i++) {
 				listaClie.get(i).start();
 			}
@@ -90,9 +96,14 @@ public class Main
 		catch (Exception e) {
 			e.printStackTrace();
 		}
+<<<<<<< HEAD
 		
+=======
 
-	}
+>>>>>>> 3b9bda0b88f005ab422b4f40c8a2cc3a5790935a
+
+
+}
 
 
 }
