@@ -1,7 +1,7 @@
 /**
  * 
  */
-package packag;
+package src;
 
 
 public class Cliente extends Thread

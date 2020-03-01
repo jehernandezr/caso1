@@ -1,7 +1,7 @@
 /**
  * 
  */
-package packag;
+package src;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -63,7 +63,14 @@ public class Main {
 				Cliente cliente = new Cliente(numMensajes, buff, i);
 				cliente.start();
 			}
-			System.out.println("---Los clientes fueron inicializados---\n");
+			System.out.println("---Los clientes fueron inicializados---");
+			
+			for (int i = 0; i < numServidores; i++) 
+			{
+				Servidor servidor = new Servidor(buff, i);
+				servidor.start();
+			}
+			System.out.println("---Los servidores fueron inicializados---\n");
 		}
 		catch (Exception e) {
 			e.printStackTrace();

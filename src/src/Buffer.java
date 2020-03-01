@@ -1,7 +1,7 @@
 /**
  * 
  */
-package packag;
+package src;
 
 import java.util.ArrayList;
 
@@ -11,22 +11,22 @@ public class Buffer
 	private int N;
 	Object lleno, vacio;
 	private int numClientesAtendidos;
-	private int numThreads;
+	private int numThreadsTotales;
 
 	public Buffer(int n, int numThreads)
 	{
 		lleno = new Object();
 		vacio = new Object();
 		this.N = n;
-		this.numThreads = numThreads;
+		this.numThreadsTotales = numThreads;
 		numClientesAtendidos = 0;
 	}
 
 	public int darNumThreads()
 	{
-		return numThreads;
+		return numThreadsTotales;
 	}
-	
+
 	public void almacenar(Mensaje mns)
 	{
 		synchronized (lleno) 
@@ -38,7 +38,7 @@ public class Buffer
 		synchronized (this) 
 		{
 			buff.add(mns);
-			
+
 			try {mns.cliente.wait();}
 			catch (InterruptedException e)
 			{e.printStackTrace();}
@@ -55,24 +55,28 @@ public class Buffer
 			catch (InterruptedException e) 
 			{e.printStackTrace();}
 		}
-		
+
 		synchronized (this) 
 		{
 			Mensaje atendido = buff.remove(1);
 			atendido.setRespuesta();
 			atendido.cliente.notify();
 		}
+		
 		synchronized (lleno) 
 		{lleno.notify();}
 	}
 
 	public void clienteTermino() 
 	{
-		synchronized (this) {
-			numThreads++;
-		}
-		if(numThreads == numClientesAtendidos)
+		synchronized (this) 
+		{numThreadsTotales++;}
+		
+		if(numThreadsTotales == numClientesAtendidos)
+		{
 			System.exit(0);
+			System.out.println("Se ha cerrado el proceso");
+		}
 	}
 
 }

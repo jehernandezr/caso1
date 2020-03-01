@@ -1,5 +1,4 @@
-package packag;
-
+package src;
 
 public class Mensaje 
 {
