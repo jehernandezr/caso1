@@ -33,26 +33,17 @@ public class Buffer
 			{Cliente.yield();}
 		}
 
-<<<<<<< HEAD
 		synchronized(mns) 
-=======
-		synchronized (this) 
->>>>>>> 3b9bda0b88f005ab422b4f40c8a2cc3a5790935a
 		{
 			System.out.println("El cliente "+mns.darCliente().darId() +" dejó el mensaje en el buffer. TamBuff: "+buff.size());
 			buff.add(mns);
 			mns.dormir();
 		}
-		
 
 	}
 
-<<<<<<< HEAD
 	public void vaciar(Servidor s)
-=======
-	public void vaciar()
->>>>>>> 3b9bda0b88f005ab422b4f40c8a2cc3a5790935a
-	{
+{
 		while ( buff.size( ) == 0 )
 		{
 			s.bufferVacio();

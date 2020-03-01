@@ -14,20 +14,13 @@ public class Main
 	private static int numServidores;
 	private static int tamBuffer;
 
-<<<<<<< HEAD
 	public static void main(String args[])
-=======
-	public Main()
->>>>>>> 3b9bda0b88f005ab422b4f40c8a2cc3a5790935a
 	{
 
 		numClientes= 0;
 		numMensajes=0;
 		numServidores=0;
 
-	}
-	public static void main(String[] args) {
-		
 		String cadena;
 		try{
 			FileReader f = new FileReader("./data/datos");
@@ -96,14 +89,8 @@ public class Main
 		catch (Exception e) {
 			e.printStackTrace();
 		}
-<<<<<<< HEAD
-		
-=======
 
->>>>>>> 3b9bda0b88f005ab422b4f40c8a2cc3a5790935a
-
-
-}
+	}
 
 
 }
