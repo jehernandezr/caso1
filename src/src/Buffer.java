@@ -6,7 +6,7 @@ public class Buffer
 {
 	public static final String ANSI_GREEN = "\u001B[32m";
 	public static final String ANSI_RESET = "\u001B[0m";
-	
+
 	private ArrayList<Mensaje> buff;
 	private int N;
 	private int numClientesAtendidos;
@@ -33,30 +33,33 @@ public class Buffer
 			{Cliente.yield();}
 		}
 
+		synchronized (this) {
+			buff.add(mns);
+			System.out.println("El cliente "+mns.darCliente().darId() +" dejó el mensaje en el buffer. TamBuff: "+buff.size());
+		}
 		synchronized(mns) 
 		{
-			System.out.println("El cliente "+mns.darCliente().darId() +" dejó el mensaje en el buffer. TamBuff: "+buff.size());
-			buff.add(mns);
 			mns.dormir();
 		}
 
 	}
 
 	public void vaciar(Servidor s)
-{
+	{
 		while ( buff.size( ) == 0 )
 		{
 			s.bufferVacio();
 		}
-		
-		Mensaje atendido = buff.remove(0);
+
+		Mensaje atendido;
 		synchronized (this) 
 		{
-				System.out.println("El servidor está atendiendo al cliente " +atendido.darCliente().darId());
-				atendido.setRespuesta();
+			atendido = buff.remove(0);
+			System.out.println("El servidor está atendiendo al cliente " +atendido.darCliente().darId());
+			atendido.setRespuesta();
 		}
 		System.out.println("Se atendió al cliente "+atendido.darCliente().darId()+". Petición: "+ atendido.darMensaje()+" - Respuesta: "+atendido.darRespuesta());
-		atendido.despertar();
+//		atendido.despertar();
 	}
 
 	public void clienteTermino() 

@@ -40,6 +40,6 @@ public class Mensaje
 	
 	public synchronized void despertar()
 	{
-		cliente.notify();
+		cliente.despertar();
 	}
 }
