@@ -21,7 +21,7 @@ public class Cliente extends Thread
 		this.id = id;
 	}
 
-	
+
 	public int darId()
 	{
 		return this.id;
@@ -48,5 +48,14 @@ public class Cliente extends Thread
 			mensajes[i] = m;
 		}
 	}
-	
+
+	public synchronized void dormir()
+	{
+		try 
+		{
+			this.wait();
+		} 
+		catch (InterruptedException e) 
+		{e.printStackTrace();}
+	}
 }

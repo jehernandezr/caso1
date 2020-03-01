@@ -9,15 +9,12 @@ public class Buffer
 	
 	private ArrayList<Mensaje> buff;
 	private int N;
-	Object lleno, vacio;
 	private int numClientesAtendidos;
 	private int numThreadsTotales;
 
 	public Buffer(int n, int numThreads)
 	{
 		buff = new ArrayList<Mensaje>();
-		lleno = new Object();
-		vacio = new Object();
 		this.N = n;
 		this.numThreadsTotales = numThreads;
 		numClientesAtendidos = 0;
@@ -30,54 +27,35 @@ public class Buffer
 
 	public void almacenar(Mensaje mns)
 	{
-		synchronized (lleno) 
+		synchronized (this) 
 		{
 			while (buff.size()== N)
-
 			{Cliente.yield();}
-
-
 		}
 
-		synchronized (buff) 
+		synchronized(mns) 
 		{
 			System.out.println("El cliente "+mns.darCliente().darId() +" dejó el mensaje en el buffer. TamBuff: "+buff.size());
 			buff.add(mns);
-
-
-			try {wait();}
-			catch (InterruptedException e)
-			{e.printStackTrace();}
+			mns.dormir();
 		}
 		
 
 	}
 
-	@SuppressWarnings("static-access")
-	public void vaciar()
+	public void vaciar(Servidor s)
 	{
-
-
 		while ( buff.size( ) == 0 )
 		{
-			synchronized (this) {
-				Servidor.yield();
-
-			}
-
-
+			s.bufferVacio();
 		}
-
-
+		
 		synchronized (this) 
 		{
-
-			while(!buff.isEmpty()) {
 				Mensaje atendido = buff.remove(0);
-				System.out.println("el servidor está atendiendo al cliente" +atendido.darCliente().darId());
+				System.out.println("El servidor está atendiendo al cliente " +atendido.darCliente().darId());
 				atendido.setRespuesta();
-
-			}
+				atendido.despertar();
 		}
 	}
 

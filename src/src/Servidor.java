@@ -21,15 +21,19 @@ public class Servidor extends Thread
 	
 	public void run() 
 	{
-
-			System.out.println("servidor"+ this.id+ "ha empezado");
-			try {buffer.vaciar();}
+		while(true)
+		{
+			try {buffer.vaciar(this);}
 			catch (Exception e) 
 			{e.printStackTrace();}
 			System.out.println();
-			System.out.println("servidor"+ this.id+ "ha terminado");
-			
-
+		}
+	}
+	
+	@SuppressWarnings("static-access")
+	public synchronized void bufferVacio()
+	{
+		this.yield();
 	}
 	
 }

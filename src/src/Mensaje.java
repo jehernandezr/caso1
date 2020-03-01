@@ -12,28 +12,34 @@ public class Mensaje
 		mns = (int) Math.floor(Math.random()*50);
 		respuesta = -1;
 	}
-	
+
 	public int darMensaje()
 	{
 		return mns;
 	}
-	
+
 	public int darRespuesta()
 	{
 		return respuesta;
 	}
-	
+
 	public Cliente darCliente()
 	{
 		return cliente;
 	}
-	
+
 	public void setRespuesta()
 	{
 		respuesta = darMensaje()+1;
 	}
+
+	public synchronized void dormir()
+	{
+		cliente.dormir();
+	}
 	
-
-
-
+	public synchronized void despertar()
+	{
+		cliente.notify();
+	}
 }

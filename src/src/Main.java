@@ -5,7 +5,6 @@ package src;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
-import java.io.IOException;
 import java.util.ArrayList;
 
 public class Main
@@ -15,7 +14,7 @@ public class Main
 	private static int numServidores;
 	private static int tamBuffer;
 
-		public Main()
+	public static void main(String args[])
 	{
 
 		numClientes= 0;
@@ -91,8 +90,6 @@ public class Main
 		catch (Exception e) {
 			e.printStackTrace();
 		}
-
-		
 		
 
 	}
