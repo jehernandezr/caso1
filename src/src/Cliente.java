@@ -36,6 +36,7 @@ public class Cliente extends Thread
 
 	public synchronized void enviarMensaje()
 	{
+		crearMensajes();
 		try
 		{
 			buff.almacenar(mensajes[enviados]);

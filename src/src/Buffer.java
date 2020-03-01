@@ -12,6 +12,7 @@ public class Buffer
 
 	public Buffer(int n, int numThreads)
 	{
+		buff = new ArrayList<Mensaje>();
 		lleno = new Object();
 		vacio = new Object();
 		this.N = n;
