@@ -4,6 +4,9 @@ import java.util.ArrayList;
 
 public class Buffer 
 {
+	public static final String ANSI_GREEN = "\u001B[32m";
+	public static final String ANSI_RESET = "\u001B[0m";
+	
 	private ArrayList<Mensaje> buff;
 	private int N;
 	Object lleno, vacio;
@@ -30,28 +33,36 @@ public class Buffer
 		synchronized (lleno) 
 		{
 			while (buff.size()== N)
+
 			{Cliente.yield();}
+
 
 		}
 
-		synchronized (this) 
+		synchronized (buff) 
 		{
+			System.out.println("El cliente "+mns.darCliente().darId() +" dejó el mensaje en el buffer. TamBuff: "+buff.size());
 			buff.add(mns);
+
 
 			try {wait();}
 			catch (InterruptedException e)
 			{e.printStackTrace();}
 		}
 		
+
 	}
 
+	@SuppressWarnings("static-access")
 	public void vaciar()
 	{
+
 
 		while ( buff.size( ) == 0 )
 		{
 			synchronized (this) {
 				Servidor.yield();
+
 			}
 
 
@@ -60,6 +71,7 @@ public class Buffer
 
 		synchronized (this) 
 		{
+
 			while(!buff.isEmpty()) {
 				Mensaje atendido = buff.remove(0);
 				System.out.println("el servidor está atendiendo al cliente" +atendido.darCliente().darId());
@@ -75,7 +87,7 @@ public class Buffer
 		{numThreadsTotales++;}
 
 		if(numThreadsTotales == numClientesAtendidos)
-		{
+		{	
 			System.exit(0);
 			System.out.println("Se ha cerrado el proceso");
 		}

@@ -21,6 +21,7 @@ public class Servidor extends Thread
 	
 	public void run() 
 	{
+
 			System.out.println("servidor"+ this.id+ "ha empezado");
 			try {buffer.vaciar();}
 			catch (Exception e) 
@@ -28,6 +29,7 @@ public class Servidor extends Thread
 			System.out.println();
 			System.out.println("servidor"+ this.id+ "ha terminado");
 			
+
 	}
 	
 }

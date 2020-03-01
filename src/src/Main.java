@@ -14,14 +14,15 @@ public class Main
 	private static int numMensajes;
 	private static int numServidores;
 	private static int tamBuffer;
+
 		public Main()
 	{
+
 		numClientes= 0;
 		numMensajes=0;
 		numServidores=0;
-	}
-
-	public static void main(String[] args) throws IOException {     
+		
+		
 		String cadena;
 		try{
 			FileReader f = new FileReader("./data/datos");
@@ -65,6 +66,7 @@ public class Main
 			for (int i = 0; i < numClientes; i++) 
 			{
 				Cliente cliente = new Cliente(i, numMensajes, buff);
+
 				listaClie.add(cliente);
 				
 			}
@@ -83,6 +85,7 @@ public class Main
 			}
 			for (int i = 0; i < numServidores; i++) {
 				listaSer.get(i).start();
+
 			}
 		}
 		catch (Exception e) {
