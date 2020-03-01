@@ -7,13 +7,15 @@ package src;
 public class Cliente extends Thread
 {
 
+	private int id;
 	private int enviados;
 	private Mensaje[] mensajes;
 	private Buffer buff;
-	private int id;
 	
-	public Cliente(int numMensajes, Buffer bf, int id)
-	{
+
+	public Cliente(int pId, int numMensajes, Buffer bf) {
+
+		id=pId;
 		enviados=0;
 		buff=bf;
 		mensajes = new Mensaje[numMensajes];
@@ -27,6 +29,7 @@ public class Cliente extends Thread
 		{
 			System.out.println("El cliente " + id +" envió su mensaje no."+(enviados+1)+": "+mensajes[enviados].darMensaje());
 			enviarMensaje();
+			enviados++;
 		}
 		System.out.println("El cliente " + id +" envió todos sus mensajes");
 		buff.clienteTermino();
@@ -34,8 +37,16 @@ public class Cliente extends Thread
 
 	public synchronized void enviarMensaje()
 	{
-		buff.almacenar(mensajes[enviados]);
-		enviados++;
+
+		try {
+			System.out.println("\n"+ "el cliente " +id+"está enviando un mensaje");
+			buff.almacenar(mensajes[enviados]);
+			enviados++;
+		} catch (Exception e) {
+			
+		}
+		
+
 	}
 
 	public void crearMensajes()

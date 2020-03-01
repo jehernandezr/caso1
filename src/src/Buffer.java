@@ -49,6 +49,7 @@ public class Buffer
 
 	public void vaciar()
 	{
+<<<<<<< HEAD:src/src/Buffer.java
 		if (buff.size() == 0)
 		{
 			try {vacio.wait();} 
@@ -56,6 +57,15 @@ public class Buffer
 			{e.printStackTrace();}
 		}
 
+=======
+		synchronized( vacio ){
+			while ( buff.size( ) == 0 ){ //Implementación
+			try { vacio.wait( ); }
+			catch( InterruptedException e ){}
+			}
+			}
+		
+>>>>>>> 25591e939086131b8365332a2e90f248bd86c969:src/packag/Buffer.java
 		synchronized (this) 
 		{
 			Mensaje atendido = buff.remove(1);
@@ -66,6 +76,9 @@ public class Buffer
 		synchronized (lleno) 
 		{lleno.notify();}
 	}
+	
+	
+	
 
 	public void clienteTermino() 
 	{

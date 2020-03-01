@@ -49,6 +49,7 @@ public class Main {
 			}
 			b.close();
 
+
 			System.out.println("---Caso 1: Manejo de la concurrencia---");
 			System.out.println("Número de clientes: "+numClientes);
 			System.out.println("Cada cliente envía "+numMensajes + " mensaje(s)");
@@ -60,7 +61,7 @@ public class Main {
 
 			for (int i = 0; i < numClientes; i++) 
 			{
-				Cliente cliente = new Cliente(numMensajes, buff, i);
+				Cliente cliente = new Cliente(i,numMensajes, buff);
 				cliente.start();
 			}
 			System.out.println("---Los clientes fueron inicializados---");
@@ -75,6 +76,8 @@ public class Main {
 		catch (Exception e) {
 			e.printStackTrace();
 		}
+
+
 	}
 
 
