@@ -27,7 +27,7 @@ public class Buffer
 
 	public void almacenar(Mensaje mns)
 	{
-		synchronized (this) 
+		synchronized (mns.darCliente()) 
 		{
 			while (buff.size()== N)
 			{Cliente.yield();}
@@ -49,13 +49,13 @@ public class Buffer
 			s.bufferVacio();
 		}
 		
+		Mensaje atendido = buff.remove(0);
 		synchronized (this) 
 		{
-				Mensaje atendido = buff.remove(0);
 				System.out.println("El servidor está atendiendo al cliente " +atendido.darCliente().darId());
 				atendido.setRespuesta();
-				atendido.despertar();
 		}
+		atendido.despertar();
 	}
 
 	public void clienteTermino() 
