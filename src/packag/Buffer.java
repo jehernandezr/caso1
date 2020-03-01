@@ -12,7 +12,7 @@ public class Buffer
 	private int N;
 	Object lleno, vacio;
 
-	public Buffer(int n)
+	public Buffer(int n, int tamBuffer)
 	{
 		lleno = new Object();
 		vacio = new Object();
@@ -44,12 +44,12 @@ public class Buffer
 
 	public void vaciar()
 	{
-		if (buff.size() == 0)
-		{
-			try {vacio.wait();} 
-			catch (InterruptedException e) 
-			{e.printStackTrace();}
-		}
+		synchronized( vacio ){
+			while ( buff.size( ) == 0 ){ //Implementación
+			try { vacio.wait( ); }
+			catch( InterruptedException e ){}
+			}
+			}
 		
 		synchronized (this) 
 		{
@@ -60,5 +60,8 @@ public class Buffer
 		synchronized (lleno) 
 		{lleno.notify();}
 	}
+	
+	
+	
 
 }

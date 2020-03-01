@@ -50,17 +50,24 @@ public class Main {
 				}
 			}
 			b.close();
-			
+
 			Buffer buff = new Buffer(numClientes, tamBuffer);
-			
+
 			for (int i = 0; i < numClientes; i++) {
-				Cliente cliente = new Cliente(numMensajes, buff);
-				
+				Cliente cliente = new Cliente(10+i,numMensajes, buff);
+				cliente.start();
+			}
+			
+			for (int i = 0; i < numServidores; i++) {
+				Servidor servidor = new Servidor(i, buff);
+				servidor.start();
 			}
 		}
 		catch (Exception e) {
 			e.printStackTrace();
 		}
+		
+		
 	}
 
 
