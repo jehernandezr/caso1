@@ -4,30 +4,35 @@
 package packag;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class Buffer 
 {
 	private ArrayList<Mensaje> buff;
 	private int N;
 	Object lleno, vacio;
+	private int numClientesAtendidos;
+	private int numThreads;
 
-	public Buffer(int n)
+	public Buffer(int n, int numThreads)
 	{
 		lleno = new Object();
 		vacio = new Object();
 		this.N = n;
+		this.numThreads = numThreads;
+		numClientesAtendidos = 0;
 	}
 
-	@SuppressWarnings("static-access")
+	public int darNumThreads()
+	{
+		return numThreads;
+	}
+	
 	public void almacenar(Mensaje mns)
 	{
 		synchronized (lleno) 
 		{
 			while (buff.size()== N)
-			{
-				mns.cliente.yield();
-			}
+			{mns.esperar();}
 		}
 
 		synchronized (this) 
@@ -59,6 +64,15 @@ public class Buffer
 		}
 		synchronized (lleno) 
 		{lleno.notify();}
+	}
+
+	public void clienteTermino() 
+	{
+		synchronized (this) {
+			numThreads++;
+		}
+		if(numThreads == numClientesAtendidos)
+			System.exit(0);
 	}
 
 }
