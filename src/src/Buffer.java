@@ -36,10 +36,7 @@ public class Buffer
 		synchronized (this) 
 		{
 			buff.add(mns);
-
-			try {mns.cliente.wait();}
-			catch (InterruptedException e)
-			{e.printStackTrace();}
+			mns.dormir();
 		}
 		synchronized (vacio) 
 		{vacio.notify();}
@@ -47,13 +44,6 @@ public class Buffer
 
 	public void vaciar()
 	{
-		if (buff.size() == 0)
-		{
-			try {vacio.wait();} 
-			catch (InterruptedException e) 
-			{e.printStackTrace();}
-		}
-
 		synchronized( vacio )
 		{
 			while ( buff.size( ) == 0 )
@@ -68,7 +58,7 @@ public class Buffer
 		{
 			Mensaje atendido = buff.remove(1);
 			atendido.setRespuesta();
-			atendido.cliente.notify();
+			atendido.despertar();
 		}
 
 		synchronized (lleno) 
@@ -79,9 +69,9 @@ public class Buffer
 	{
 		synchronized (this) 
 		{numThreadsTotales++;}
-
+		
 		if(numThreadsTotales == numClientesAtendidos)
-		{
+		{	
 			System.exit(0);
 			System.out.println("Se ha cerrado el proceso");
 		}
