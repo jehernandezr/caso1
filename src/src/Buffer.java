@@ -1,6 +1,3 @@
-/**
- * 
- */
 package src;
 
 import java.util.ArrayList;
@@ -49,7 +46,6 @@ public class Buffer
 
 	public void vaciar()
 	{
-<<<<<<< HEAD:src/src/Buffer.java
 		if (buff.size() == 0)
 		{
 			try {vacio.wait();} 
@@ -57,34 +53,32 @@ public class Buffer
 			{e.printStackTrace();}
 		}
 
-=======
-		synchronized( vacio ){
-			while ( buff.size( ) == 0 ){ //Implementación
-			try { vacio.wait( ); }
-			catch( InterruptedException e ){}
+		synchronized( vacio )
+		{
+			while ( buff.size( ) == 0 )
+			{
+				try { vacio.wait( ); }
+				catch( InterruptedException e )
+				{e.printStackTrace();}
 			}
-			}
-		
->>>>>>> 25591e939086131b8365332a2e90f248bd86c969:src/packag/Buffer.java
+		}
+
 		synchronized (this) 
 		{
 			Mensaje atendido = buff.remove(1);
 			atendido.setRespuesta();
 			atendido.cliente.notify();
 		}
-		
+
 		synchronized (lleno) 
 		{lleno.notify();}
 	}
 	
-	
-	
-
 	public void clienteTermino() 
 	{
 		synchronized (this) 
 		{numThreadsTotales++;}
-		
+
 		if(numThreadsTotales == numClientesAtendidos)
 		{
 			System.exit(0);

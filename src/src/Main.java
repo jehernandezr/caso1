@@ -7,8 +7,8 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 
-public class Main {
-
+public class Main
+{
 	private static int numClientes;
 	private static int numMensajes;
 	private static int numServidores;
@@ -48,8 +48,7 @@ public class Main {
 				}
 			}
 			b.close();
-
-
+			
 			System.out.println("---Caso 1: Manejo de la concurrencia---");
 			System.out.println("Número de clientes: "+numClientes);
 			System.out.println("Cada cliente envía "+numMensajes + " mensaje(s)");
@@ -61,17 +60,17 @@ public class Main {
 
 			for (int i = 0; i < numClientes; i++) 
 			{
-				Cliente cliente = new Cliente(i,numMensajes, buff);
+				Cliente cliente = new Cliente(i, numMensajes, buff);
 				cliente.start();
 			}
 			System.out.println("---Los clientes fueron inicializados---");
 			
-			for (int i = 0; i < numServidores; i++) 
-			{
-				Servidor servidor = new Servidor(buff, i);
-				servidor.start();
-			}
-			System.out.println("---Los servidores fueron inicializados---\n");
+//			for (int i = 0; i < numServidores; i++) 
+//			{
+//				Servidor servidor = new Servidor(buff, i);
+//				servidor.start();
+//			}
+//			System.out.println("---Los servidores fueron inicializados---\n");
 		}
 		catch (Exception e) {
 			e.printStackTrace();

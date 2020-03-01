@@ -13,9 +13,8 @@ public class Cliente extends Thread
 	private Buffer buff;
 	
 
-	public Cliente(int pId, int numMensajes, Buffer bf) {
-
-		id=pId;
+	public Cliente(int id, int numMensajes, Buffer bf)
+	{
 		enviados=0;
 		buff=bf;
 		mensajes = new Mensaje[numMensajes];
@@ -37,16 +36,13 @@ public class Cliente extends Thread
 
 	public synchronized void enviarMensaje()
 	{
-
-		try {
-			System.out.println("\n"+ "el cliente " +id+"está enviando un mensaje");
+		try
+		{
 			buff.almacenar(mensajes[enviados]);
 			enviados++;
-		} catch (Exception e) {
-			
-		}
-		
-
+		} 
+		catch (Exception e) 
+		{e.printStackTrace();}
 	}
 
 	public void crearMensajes()
