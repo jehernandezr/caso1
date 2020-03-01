@@ -55,6 +55,7 @@ public class Buffer
 				System.out.println("El servidor está atendiendo al cliente " +atendido.darCliente().darId());
 				atendido.setRespuesta();
 		}
+		System.out.println("Se atendió al cliente "+atendido.darCliente().darId()+". Petición: "+ atendido.darMensaje()+" - Respuesta: "+atendido.darRespuesta());
 		atendido.despertar();
 	}
 
