@@ -23,9 +23,10 @@ public class Servidor extends Thread
 	{
 		while(true)
 		{			
-			try {buffer.vaciar();}
+			try {buffer.vaciar(this);}
 			catch (Exception e) 
 			{e.printStackTrace();}
+			
 		}
 	}
 	

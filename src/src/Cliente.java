@@ -48,4 +48,9 @@ public class Cliente extends Thread
 			mensajes[i] = m;
 		}
 	}
+	
+	public int darId()
+	{
+		return id;
+	}
 }

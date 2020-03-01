@@ -33,7 +33,7 @@ public class Mensaje
 		respuesta = darMensaje()+1;
 	}
 	
-	public void dormir()
+	public synchronized void dormir()
 	{
 		try
 		{cliente.wait();}
@@ -50,7 +50,7 @@ public class Mensaje
 		{e.printStackTrace();}
 	}
 	
-	public void despertar()
+	public synchronized void despertar()
 	{
 		cliente.notify();
 	}
