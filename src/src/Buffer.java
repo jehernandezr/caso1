@@ -39,7 +39,7 @@ public class Buffer
 
 		}
 
-		synchronized (buff) 
+		synchronized (this) 
 		{
 			System.out.println("El cliente "+mns.darCliente().darId() +" dejó el mensaje en el buffer. TamBuff: "+buff.size());
 			buff.add(mns);
@@ -53,7 +53,6 @@ public class Buffer
 
 	}
 
-	@SuppressWarnings("static-access")
 	public void vaciar()
 	{
 
