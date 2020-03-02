@@ -30,7 +30,7 @@ public class Cliente extends Thread
 	public void run()
 	{
 		crearMensajes();
-		while (enviados != (mensajes.length-1))
+		while (enviados != mensajes.length)
 		{
 			System.out.println("El cliente " + id +" envió su mensaje no."+(enviados+1)+": "+mensajes[enviados].darMensaje());
 			buff.almacenar(mensajes[enviados]); 
