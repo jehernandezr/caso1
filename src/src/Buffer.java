@@ -20,6 +20,16 @@ public class Buffer
 		numClientesAtendidos = 0;
 	}
 
+	public synchronized void agregarMensaje(Mensaje m) 
+	{
+		buff.add(m);
+	}
+
+	public synchronized int consultarTamBuff() 
+	{
+		return buff.size();
+	}
+
 	public int darNumThreads()
 	{
 		return numThreadsTotales;
@@ -29,12 +39,12 @@ public class Buffer
 	{
 		synchronized (mns.darCliente()) 
 		{
-			while (buff.size()== N)
+			while (consultarTamBuff()== N)
 			{Cliente.yield();}
 		}
 
 		synchronized (this) {
-			buff.add(mns);
+			agregarMensaje(mns);
 			System.out.println("El cliente "+mns.darCliente().darId() +" dejó el mensaje en el buffer. TamBuff: "+buff.size());
 		}
 		synchronized(mns) 
@@ -46,27 +56,26 @@ public class Buffer
 
 	public void vaciar(Servidor s)
 	{
-		
-		
-			while ( buff.size( ) == 0 )
-			{
-				synchronized (this) {
-					Servidor.yield();
-				}
-				
-				}
-			
+
+		while ( consultarTamBuff() == 0 )
+		{
+			synchronized (this) 
+			{Servidor.yield();}
+		}
+
 		Mensaje atendido;
 		synchronized (this) 
 		{
-			
-			atendido = buff.remove(0);
-			System.out.println("El servidor está atendiendo al cliente " +atendido.darCliente().darId());
-			atendido.setRespuesta();
-		}
-		System.out.println("Se atendió al cliente "+atendido.darCliente().darId()+". Petición: "+ atendido.darMensaje()+" - Respuesta: "+atendido.darRespuesta());
+			if( consultarTamBuff() != 0 )
+			{
+				atendido = buff.remove(0);
+				System.out.println("El servidor está atendiendo al cliente " +atendido.darCliente().darId());
+				atendido.setRespuesta();
+				System.out.println("Se atendió al cliente "+atendido.darCliente().darId()+". Petición: "+ atendido.darMensaje()+" - Respuesta: "+atendido.darRespuesta());
+				atendido.despertar();
+			}
 
-		atendido.despertar();
+		}
 	}
 
 	public void clienteTermino() 
@@ -86,6 +95,6 @@ public class Buffer
 		}
 		else
 			return false;
-		
+
 	}
 }
