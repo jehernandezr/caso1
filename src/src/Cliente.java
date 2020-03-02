@@ -37,6 +37,7 @@ public class Cliente extends Thread
 			enviados++;
 		}
 		System.out.println("El cliente " + id +" envió todos sus mensajes");
+		buff.clienteTermino();
 	}
 
 	public void crearMensajes()

@@ -78,19 +78,19 @@ public class Buffer
 		}
 	}
 
-	public void clienteTermino() 
+	public synchronized void clienteTermino() 
 	{
 		synchronized (this) 
-		{numThreadsTotales++;}
+		{numClientesAtendidos++;}
 		termino();
 	}
 
-	public synchronized boolean termino()
+	public boolean termino()
 	{
 		if(numThreadsTotales == numClientesAtendidos)
 		{	
+			System.out.println("---Se ha cerrado el proceso---");
 			System.exit(0);
-			System.out.println("Se ha cerrado el proceso");
 			return true;
 		}
 		else
