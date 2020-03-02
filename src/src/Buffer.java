@@ -46,14 +46,20 @@ public class Buffer
 
 	public void vaciar(Servidor s)
 	{
-		while ( buff.size( ) == 0 )
-		{
-			s.bufferVacio();
-		}
-
+		
+		
+			while ( buff.size( ) == 0 )
+			{
+				synchronized (this) {
+					Servidor.yield();
+				}
+				
+				}
+			
 		Mensaje atendido;
 		synchronized (this) 
 		{
+			
 			atendido = buff.remove(0);
 			System.out.println("El servidor está atendiendo al cliente " +atendido.darCliente().darId());
 			atendido.setRespuesta();
@@ -70,7 +76,7 @@ public class Buffer
 		termino();
 	}
 
-	public boolean termino()
+	public synchronized boolean termino()
 	{
 		if(numThreadsTotales == numClientesAtendidos)
 		{	
