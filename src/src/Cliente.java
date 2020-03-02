@@ -61,6 +61,6 @@ public class Cliente extends Thread
 
 	public synchronized void despertar() 
 	{
-		this.notify();
+		this.notifyAll();
 	}
 }

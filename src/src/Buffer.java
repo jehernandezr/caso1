@@ -59,19 +59,27 @@ public class Buffer
 			atendido.setRespuesta();
 		}
 		System.out.println("Se atendió al cliente "+atendido.darCliente().darId()+". Petición: "+ atendido.darMensaje()+" - Respuesta: "+atendido.darRespuesta());
-//		atendido.despertar();
+
+		atendido.despertar();
 	}
 
 	public void clienteTermino() 
 	{
 		synchronized (this) 
 		{numThreadsTotales++;}
+		termino();
+	}
 
+	public boolean termino()
+	{
 		if(numThreadsTotales == numClientesAtendidos)
 		{	
 			System.exit(0);
 			System.out.println("Se ha cerrado el proceso");
+			return true;
 		}
+		else
+			return false;
+		
 	}
-
 }

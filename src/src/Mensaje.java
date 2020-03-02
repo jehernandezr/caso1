@@ -35,11 +35,15 @@ public class Mensaje
 
 	public synchronized void dormir()
 	{
-		cliente.dormir();
+		try {
+			this.wait();
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
 	}
 	
 	public synchronized void despertar()
 	{
-		cliente.despertar();
+		this.notify();
 	}
 }

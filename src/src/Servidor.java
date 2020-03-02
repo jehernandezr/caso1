@@ -21,7 +21,7 @@ public class Servidor extends Thread
 	
 	public void run() 
 	{
-		while(true)
+		while(buffer.termino()==false)
 		{
 			try {buffer.vaciar(this);}
 			catch (Exception e) 
